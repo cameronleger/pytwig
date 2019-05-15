@@ -140,6 +140,13 @@ class BW_File:
 		from pytwig.src.lib import fs
 		fs.write(path, self.serialize().replace('":', '" :'))
 
+	def read_bytes(self, bytes, raw = True, meta_only = False):
+		bytecode = BW_Bytecode().set_contents(bytes)
+		bytecode.raw = raw
+		bytecode.debug_obj = self
+		#self.num_spaces = 0
+		self.decode(bytecode, meta_only = meta_only)
+
 	def read(self, path, raw = True, meta_only = False):
 		from pytwig.src.lib import fs
 		bytecode = BW_Bytecode().set_contents(fs.read_binary(path))
