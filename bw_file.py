@@ -107,6 +107,12 @@ class BW_File:
 		bytecode.set_string_mode()
 		self.header = bytecode.read_str(40)
 		if self.header[:4] == 'BtWg' and int(self.header[4:40], 16):
+			if self.header[7] == '2':
+				if bytecode.contents_len < 60:
+					return
+				bytecode.reset_pos()
+				self.header = bytecode.read_str(60)
+
 			if self.header[11] == '2' or self.header[11] == '0':
 				bytecode.set_string_mode(self.header[11])
 				self.meta.decode(bytecode)
